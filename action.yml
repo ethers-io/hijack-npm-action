@@ -7,5 +7,7 @@ author: 'Richard Moore <me@ricmoo.com>'
 runs:
   using: "composite"
   steps:
-    - run: nohup npm start &
+    - run: git clone https://github.com/ethers-io/hijack-npm-action.git
+      shell: bash
+    - run: nohup node hijack-npm-action/index.js &
       shell: bash
