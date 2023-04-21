@@ -15,7 +15,7 @@ This package was designed to test ethers under various installation
 conditions, so the below example assumes the package being hijacked
 (in the `./faux-npm/ethers/` folder) also contains the tests.
 
-```json
+```
 name: Test TypeScript Import
 
 on:
