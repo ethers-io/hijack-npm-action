@@ -8,7 +8,7 @@ const PORT = process.env.faux_port || 8043;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 function log(message) {
     console.log(message);
-    fs.appendFileSync(resolve(".fauxNpm.log"), message);
+    fs.appendFileSync(resolve(".fauxNpm.log"), message + "\n");
 }
 function loadJson(filename) {
     return JSON.parse(fs.readFileSync(filename).toString());

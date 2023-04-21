@@ -14,7 +14,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 function log(message: string): void {
     console.log(message);
-    fs.appendFileSync(resolve(".fauxNpm.log"), message);
+    fs.appendFileSync(resolve(".fauxNpm.log"), message + "\n");
 }
 
 function loadJson(filename: string) {
