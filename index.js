@@ -6,6 +6,10 @@ import { dirname, resolve } from "path";
 import https from "https";
 const PORT = process.env.faux_port || 8043;
 const __dirname = dirname(fileURLToPath(import.meta.url));
+function log(message) {
+    console.log(message);
+    fs.appendFileSync(resolve(".fauxNpm.log"), message);
+}
 function loadJson(filename) {
     return JSON.parse(fs.readFileSync(filename).toString());
 }
@@ -24,11 +28,6 @@ function getPackageInfo(name) {
     // Create the npm packaged tarball
     const child = spawnSync("npm", ["pack", "--json"], { cwd: pkgPath });
     if (child.status !== 0) {
-        console.log({
-            status: child.status,
-            stdout: child.stdout.toString(),
-            stderr: child.stdout.toString(),
-        });
         throw new Error("npm pack failed");
     }
     const filename = JSON.parse(child.stdout.toString())[0].filename;
@@ -97,7 +96,7 @@ const server = createServer(async (req, resp) => {
         let comps = packageName.split("/");
         comps.shift();
         const filename = resolve(__dirname, "faux_modules", comps.join("/"));
-        console.log(`  Faux-NPM: Using local tarball (${filename})...`);
+        log(`  Faux-NPM: Using local tarball (${filename})...`);
         result = fs.readFileSync(filename);
     }
     else {
@@ -113,11 +112,11 @@ const server = createServer(async (req, resp) => {
             return;
         }
         if (info) {
-            console.log(`  Faux-NPM: Using local pkg (${packageName})...`);
+            log(`  Faux-NPM: Using local pkg (${packageName})...`);
             result = info;
         }
         else {
-            console.log(`  Faux-NPM: Forwarding to NPM (${req.url})...`);
+            log(`  Faux-NPM: Forwarding to NPM (${req.url})...`);
             result = await forwardRequest(req);
         }
     }
@@ -125,9 +124,9 @@ const server = createServer(async (req, resp) => {
     resp.end();
 });
 server.listen(PORT, () => {
-    console.log(`Started faux-registry on ${PORT}...`);
+    log(`Started faux-registry on ${PORT}...`);
 });
 server.on("error", (error) => {
-    console.log("Error");
-    console.log(error);
+    log("Error");
+    log(error.toString());
 });
