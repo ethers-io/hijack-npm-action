@@ -1,0 +1,23 @@
+name: 'Run NPM Package Hijacker'
+
+description: 'Installs and runs a faux NPM registry'
+
+author: 'Richard Moore <me@ricmoo.com>'
+
+runs:
+  using: "composite"
+  steps:
+    - run: sudo add-apt-repository -y ppa:ethereum/ethereum
+      shell: bash
+    - run: sudo apt-get update
+      shell: bash
+    - run: sudo apt-get install ethereum
+      shell: bash
+    - run: mkdir -p ./blockchain
+      shell: bash
+    - run: cp -r "${{ github.action_path }}/keystore" ./blockchain/keystore
+      shell: bash
+    - run: geth --dev --dev.period 1 --datadir ./blockchain/ init "${{ github.action_path }}/genesis.json"
+      shell: bash
+    - run: nohup `which geth` --dev --dev.period 1 --datadir ./blockchain/ --http --http.addr 0.0.0.0 --http.api eth,web3,net &
+      shell: bash

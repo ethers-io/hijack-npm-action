@@ -1,0 +1,18 @@
+{
+  "name": "test-faux",
+  "version": "0.0.1",
+  "description": "Test faux pacakge.",
+  "main": "index.cjs",
+  "module": "index.mjs",
+  "private": true,
+  "publishConfig": {
+    "access": "private"
+  },
+  "type": "module",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Richard Moore <me@ricmoo.com>",
+  "license": "MIT"
+}

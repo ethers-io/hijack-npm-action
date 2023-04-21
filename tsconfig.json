@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2020",
+      "es5"
+    ],
+    "esModuleInterop": true,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "es2022"
+  },
+  "exclude": [ ],
+  "include": [
+    "./index.ts"
+  ],
+}
