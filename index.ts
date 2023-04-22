@@ -22,7 +22,7 @@ function loadJson(filename: string) {
 }
 
 function getPackageInfo(name: string): null | string {
-    const pkgPath = resolve(__dirname, "faux_modules", name);
+    const pkgPath = resolve(__dirname, "..", "faux_modules", name);
     try {
         const stat = fs.statSync(pkgPath)
         if (!stat.isDirectory()) { throw new Error("not a directory"); }
@@ -114,7 +114,7 @@ const server = createServer(async (req, resp) => {
     if (packageName.split("/")[0] === "__packages__") {
         let comps = packageName.split("/");
         comps.shift();
-        const filename = resolve(__dirname, "faux_modules", comps.join("/"));
+        const filename = resolve(__dirname, "..", "faux_modules", comps.join("/"));
         log(`  Faux-NPM: Using local tarball (${ filename })...`);
         result = fs.readFileSync(filename);
 
