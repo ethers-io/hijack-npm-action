@@ -74,6 +74,7 @@ async function forwardRequest(req) {
     }
     const headers = req.headers;
     headers["host"] = "registry.npmjs.org";
+    delete headers["accept-encoding"];
     return new Promise((resolve, reject) => {
         const newReq = https.request(url, { headers, method: req.method }, (resp) => {
             readStream(resp).then(resolve, reject);
